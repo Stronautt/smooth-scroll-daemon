@@ -1,0 +1,20 @@
+[Unit]
+Description=Smooth scroll daemon for SPICE/QEMU virtual machines
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/smooth-scroll
+Restart=on-failure
+RestartSec=3
+
+# Needs root for EVIOCGRAB and /dev/uinput access
+User=root
+
+# Harden the service slightly
+ProtectHome=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=graphical.target
