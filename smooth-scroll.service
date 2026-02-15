@@ -5,6 +5,7 @@ Wants=graphical.target
 
 [Service]
 Type=simple
+ExecStartPre=/usr/bin/udevadm settle --timeout=10
 ExecStart=/usr/local/bin/smooth-scroll
 Restart=on-failure
 RestartSec=3
