@@ -1,14 +1,14 @@
 [Unit]
 Description=Smooth scroll daemon for SPICE/QEMU virtual machines
-After=graphical.target
+After=graphical.target spice-vdagentd.service
 Wants=graphical.target
 
 [Service]
 Type=simple
-ExecStartPre=/usr/bin/udevadm settle --timeout=10
+ExecStartPre=/usr/bin/udevadm settle --timeout=30
 ExecStart=/usr/local/bin/smooth-scroll
 Restart=on-failure
-RestartSec=3
+RestartSec=5
 
 # Needs root for EVIOCGRAB and /dev/uinput access
 User=root

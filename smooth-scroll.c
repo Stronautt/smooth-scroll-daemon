@@ -57,6 +57,7 @@
 /* ── Global state for signal handler ──────────────────────────────────── */
 
 static volatile sig_atomic_t g_running = 1;
+static volatile sig_atomic_t g_device_error = 0;
 
 static void signal_handler(int sig)
 {
@@ -819,12 +820,14 @@ int main(int argc, char *argv[])
                                 "Source device read error: %s\n",
                                 strerror(errno));
                         g_running = 0;
+                        g_device_error = 1;
                         break;
                     }
                     if (n == 0)
                     {
                         fprintf(stderr, "Source device EOF.\n");
                         g_running = 0;
+                        g_device_error = 1;
                         break;
                     }
                     if (n != sizeof(ev))
@@ -1002,5 +1005,5 @@ cleanup:
     free(auto_path);
 
     fprintf(stderr, "Cleanup complete.\n");
-    return 0;
+    return g_device_error ? 1 : 0;
 }
